@@ -2237,5 +2237,386 @@
     Attorney advertising. Prior results do not guarantee similar outcomes.
   </footer>
 
+  <!-- ═══════════════════════════════════
+       AI LEGAL ASSISTANT CHAT WIDGET
+  ═══════════════════════════════════ -->
+
+  <!-- Floating bubble -->
+  <button id="ai-bubble" onclick="toggleChat()" aria-label="Open AI Legal Assistant">
+    <span id="ai-bubble-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.06L2 22l4.94-1.37A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    </span>
+    <span id="ai-bubble-close" style="display:none;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </span>
+    <span id="ai-notif">1</span>
+  </button>
+
+  <!-- Chat popup -->
+  <div id="ai-chat" role="dialog" aria-label="AI Legal Assistant">
+    <div id="ai-header">
+      <div id="ai-avatar">⚖️</div>
+      <div id="ai-header-text">
+        <div id="ai-name">AI Legal Assistant</div>
+        <div id="ai-status"><span id="ai-dot"></span> Gonzales Law Offices</div>
+      </div>
+      <button id="ai-close-btn" onclick="toggleChat()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+
+    <div id="ai-messages">
+      <div class="ai-msg ai-msg-bot">
+        <div class="ai-bubble-msg">👋 Hi! I'm the AI Legal Assistant for <strong>Gonzales Law Offices</strong>.<br><br>Were you injured in an accident? I can help you understand your rights — <strong>free, no obligation</strong>.</div>
+      </div>
+      <div class="ai-msg ai-msg-bot">
+        <div class="ai-bubble-msg">What would you like to know?</div>
+      </div>
+      <div id="ai-quick-btns">
+        <button class="ai-quick" onclick="askQ(this,'💰 What is my case worth?')">💰 What is my case worth?</button>
+        <button class="ai-quick" onclick="askQ(this,'🚗 I was just in a car accident')">🚗 I was just in a car accident</button>
+        <button class="ai-quick" onclick="askQ(this,'⏰ How long do I have to file?')">⏰ How long do I have to file?</button>
+        <button class="ai-quick" onclick="askQ(this,'💼 How does your fee work?')">💼 How does your fee work?</button>
+        <button class="ai-quick" onclick="askQ(this,'📋 Do I have a case?')">📋 Do I have a case?</button>
+        <button class="ai-quick" onclick="askQ(this,'📞 Talk to a real attorney now')">📞 Talk to a real attorney now</button>
+      </div>
+    </div>
+
+    <div id="ai-input-row">
+      <input id="ai-input" type="text" placeholder="Ask anything about your case…" onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <button id="ai-send" onclick="sendMsg()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <style>
+    /* ── Bubble ── */
+    #ai-bubble {
+      position: fixed;
+      bottom: 22px;
+      right: 18px;
+      z-index: 9999;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c42727, #8a1a1a);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(196,39,39,0.55);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: bubblePulse 2.8s ease-in-out infinite;
+    }
+    #ai-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(196,39,39,0.7); }
+    @keyframes bubblePulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(196,39,39,0.55); }
+      50% { box-shadow: 0 4px 30px rgba(196,39,39,0.85), 0 0 0 8px rgba(196,39,39,0.12); }
+    }
+    #ai-notif {
+      position: absolute;
+      top: 2px; right: 2px;
+      background: #e8c84a;
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      border: 2px solid #0e1118;
+    }
+
+    /* ── Chat window ── */
+    #ai-chat {
+      position: fixed;
+      bottom: 90px;
+      right: 18px;
+      z-index: 9998;
+      width: 320px;
+      max-width: calc(100vw - 36px);
+      background: #13161f;
+      border: 1px solid rgba(196,39,39,0.25);
+      border-radius: 18px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      max-height: 520px;
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.18s ease;
+    }
+    #ai-chat.open {
+      display: flex;
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    #ai-chat.animating { display: flex; }
+
+    /* Header */
+    #ai-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #c42727 0%, #8a1a1a 100%);
+    }
+    #ai-avatar {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    #ai-name { font-size: 13px; font-weight: 700; color: #fff; }
+    #ai-status { font-size: 10.5px; color: rgba(255,255,255,0.75); display: flex; align-items: center; gap: 4px; margin-top: 1px; }
+    #ai-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ddb80; display: inline-block; animation: blink 1.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    #ai-header-text { flex: 1; }
+    #ai-close-btn { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px; display: flex; align-items: center; border-radius: 6px; }
+    #ai-close-btn:hover { color: #fff; background: rgba(255,255,255,0.15); }
+
+    /* Messages */
+    #ai-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+    .ai-msg { display: flex; }
+    .ai-msg-bot { justify-content: flex-start; }
+    .ai-msg-user { justify-content: flex-end; }
+    .ai-bubble-msg {
+      max-width: 85%;
+      padding: 10px 13px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.9);
+    }
+    .ai-msg-bot .ai-bubble-msg {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-bottom-left-radius: 4px;
+    }
+    .ai-msg-user .ai-bubble-msg {
+      background: linear-gradient(135deg, #c42727, #a01f1f);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Quick buttons */
+    #ai-quick-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 4px 0 4px;
+    }
+    .ai-quick {
+      background: rgba(196,39,39,0.10);
+      border: 1px solid rgba(196,39,39,0.28);
+      color: rgba(255,255,255,0.82);
+      border-radius: 100px;
+      padding: 5px 11px;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      text-align: left;
+    }
+    .ai-quick:hover { background: rgba(196,39,39,0.22); border-color: rgba(196,39,39,0.55); color: #fff; }
+
+    /* Typing indicator */
+    .ai-typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; }
+    .ai-typing span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: typingBounce 1s ease-in-out infinite;
+    }
+    .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+    .ai-typing span:nth-child(3) { animation-delay: 0.30s; }
+    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+    /* Input */
+    #ai-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      background: rgba(0,0,0,0.2);
+    }
+    #ai-input {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #ai-input:focus { border-color: rgba(196,39,39,0.5); }
+    #ai-input::placeholder { color: rgba(255,255,255,0.3); }
+    #ai-send {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #c42727, #a01f1f);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: filter 0.15s;
+    }
+    #ai-send:hover { filter: brightness(1.2); }
+  </style>
+
+  <script>
+    const GPT_URL = 'https://chatgpt.com/g/g-6848c15bbef08191a1b5e45f939a331f-lawyer-injury-case-value';
+    const PHONE   = 'tel:+18882322898';
+
+    const answers = {
+      '💰 What is my case worth?': {
+        text: 'Case value depends on your injuries, medical bills, lost wages, and pain & suffering. Our clients have recovered <strong>$100M+</strong>.<br><br>Use our AI estimator for a free instant estimate 👇',
+        action: { label: '🤖 Get AI Case Estimate', url: GPT_URL }
+      },
+      '🚗 I was just in a car accident': {
+        text: '⚠️ <strong>Act now — these steps protect your claim:</strong><br><br>1. Seek medical attention immediately<br>2. Document everything with photos<br>3. Do NOT talk to the other insurance company<br>4. Call us <strong>before</strong> signing anything',
+        action: { label: '📞 Call Free 24/7: 1-888-232-2898', url: PHONE }
+      },
+      '⏰ How long do I have to file?': {
+        text: 'In California, the <strong>statute of limitations</strong> for car accidents is <strong>2 years</strong> from the date of injury.<br><br>⚠️ For government vehicles, only <strong>6 months</strong>.<br><br>Don\'t wait — evidence disappears fast.',
+        action: { label: '📞 Call Now — Free Consultation', url: PHONE }
+      },
+      '💼 How does your fee work?': {
+        text: '<strong>100% free until we win.</strong><br><br>✅ No upfront costs<br>✅ No hourly fees<br>✅ No fee unless we recover money for you<br><br>We only get paid when YOU get paid.',
+        action: { label: '📋 Start Your Free Case Review', url: 'https://www.gonzaleslawoffices.com/contact/' }
+      },
+      '📋 Do I have a case?': {
+        text: 'Most accident victims don\'t realize how strong their case is. If someone else\'s <strong>negligence caused your injury</strong>, you likely have a claim.<br><br>Let our AI or a real attorney review your case — free, no obligation.',
+        action: { label: '🤖 Check With AI Estimator', url: GPT_URL }
+      },
+      '📞 Talk to a real attorney now': {
+        text: 'Attorney <strong>Mark Gonzales, Esq.</strong> and his team are available <strong>24/7</strong>.<br><br>📞 <strong>1-888-232-2898</strong><br>📱 Text: (909) 406-5099<br>🌐 Fontana · San Bernardino · Ontario · Rancho Cucamonga',
+        action: { label: '📞 Call 1-888-232-2898 Now', url: PHONE }
+      }
+    };
+
+    let chatOpen = false;
+
+    function toggleChat() {
+      const chat = document.getElementById('ai-chat');
+      const icon = document.getElementById('ai-bubble-icon');
+      const closeIcon = document.getElementById('ai-bubble-close');
+      const notif = document.getElementById('ai-notif');
+      chatOpen = !chatOpen;
+      if (chatOpen) {
+        chat.style.display = 'flex';
+        requestAnimationFrame(() => chat.classList.add('open'));
+        icon.style.display = 'none';
+        closeIcon.style.display = 'flex';
+        notif.style.display = 'none';
+      } else {
+        chat.classList.remove('open');
+        setTimeout(() => { chat.style.display = 'none'; }, 200);
+        icon.style.display = 'flex';
+        closeIcon.style.display = 'none';
+      }
+    }
+
+    function askQ(btn, question) {
+      document.getElementById('ai-quick-btns').style.display = 'none';
+      addMsg(question, 'user');
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        const ans = answers[question];
+        if (ans) {
+          addMsg(ans.text, 'bot');
+          setTimeout(() => addActionBtn(ans.action), 300);
+        }
+      }, 900);
+    }
+
+    function sendMsg() {
+      const input = document.getElementById('ai-input');
+      const text  = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      document.getElementById('ai-quick-btns').style.display = 'none';
+      addMsg(text, 'user');
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        addMsg('Great question! For the most accurate answer about your specific situation, our AI attorney tool can help right now — or call us free 24/7.', 'bot');
+        setTimeout(() => {
+          addActionBtn({ label: '🤖 Ask AI Case Estimator', url: GPT_URL + '?q=' + encodeURIComponent(text) });
+          addActionBtn({ label: '📞 Call 1-888-232-2898', url: PHONE });
+        }, 300);
+      }, 1100);
+    }
+
+    function addMsg(html, type) {
+      const msgs = document.getElementById('ai-messages');
+      const div = document.createElement('div');
+      div.className = 'ai-msg ai-msg-' + type;
+      const bubble = document.createElement('div');
+      bubble.className = 'ai-bubble-msg';
+      bubble.innerHTML = html;
+      div.appendChild(bubble);
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function addActionBtn(action) {
+      const msgs = document.getElementById('ai-messages');
+      const wrap = document.createElement('div');
+      wrap.className = 'ai-msg ai-msg-bot';
+      const btn = document.createElement('a');
+      btn.href = action.url;
+      btn.target = action.url.startsWith('tel') ? '_self' : '_blank';
+      btn.rel = 'noopener';
+      btn.style.cssText = 'display:inline-block;background:linear-gradient(135deg,#c42727,#a01f1f);color:#fff;text-decoration:none;font-size:12px;font-weight:600;padding:9px 15px;border-radius:100px;font-family:Poppins,sans-serif;margin-top:2px;';
+      btn.textContent = action.label;
+      wrap.appendChild(btn);
+      msgs.appendChild(wrap);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function showTyping() {
+      const msgs = document.getElementById('ai-messages');
+      const div = document.createElement('div');
+      div.className = 'ai-msg ai-msg-bot';
+      div.id = 'ai-typing-indicator';
+      div.innerHTML = '<div class="ai-bubble-msg ai-typing"><span></span><span></span><span></span></div>';
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('ai-typing-indicator');
+      if (t) t.remove();
+    }
+
+    // Auto-open after 4 seconds
+    setTimeout(() => { if (!chatOpen) toggleChat(); }, 4000);
+  </script>
+
 </body>
 </html>
