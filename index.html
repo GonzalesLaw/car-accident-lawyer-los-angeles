@@ -504,13 +504,35 @@
   <!-- ═══ Crawlers & Plugins ═══ -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <link rel="manifest" href="/site.webmanifest" />
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Gonzales Law Offices" />
   <meta name="theme-color" content="#c42727" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Gonzales Law" />
   <link rel="apple-touch-icon" href="/logo.jpg" />
-  <!-- AI crawler hint -->
   <link rel="alternate" type="text/plain" href="/llms.txt" title="AI-readable summary" />
+
+  <!-- ═══ Search Engine Verification ═══ -->
+  <!-- Google Search Console — replace content with your verification code from https://search.google.com/search-console -->
+  <meta name="google-site-verification" content="PASTE_GOOGLE_VERIFICATION_CODE_HERE" />
+  <!-- Bing Webmaster Tools — replace content from https://www.bing.com/webmasters -->
+  <meta name="msvalidate.01" content="PASTE_BING_VERIFICATION_CODE_HERE" />
+  <!-- Yandex Webmaster — from https://webmaster.yandex.com -->
+  <meta name="yandex-verification" content="PASTE_YANDEX_CODE_HERE" />
+  <!-- Baidu — from https://ziyuan.baidu.com -->
+  <meta name="baidu-site-verification" content="PASTE_BAIDU_CODE_HERE" />
+  <!-- Pinterest — from https://analytics.pinterest.com -->
+  <meta name="p:domain_verify" content="PASTE_PINTEREST_CODE_HERE" />
+  <!-- Norton Safe Web -->
+  <meta name="norton-safeweb-site-verification" content="gonzaleslawoffices" />
+
+  <!-- ═══ IndexNow — instant indexing on Bing, Yandex, Seznam, Naver ═══ -->
+  <meta name="indexnow-key" content="gonzaleslaw2026indexnow" />
+
+  <!-- ═══ Hreflang (English + Spanish) ═══ -->
+  <link rel="alternate" hreflang="en" href="https://links.gonzaleslawoffices.com/" />
+  <link rel="alternate" hreflang="es" href="https://gonzaleslawoffices.com/es/" />
+  <link rel="alternate" hreflang="x-default" href="https://links.gonzaleslawoffices.com/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1154,6 +1176,18 @@
       <span id="sticky-free">FREE</span>
     </a>
   </div>
+
+  <!-- ═══ IndexNow — ping Bing, Yandex, Seznam, Naver on first visit ═══ -->
+  <script>
+    (function(){
+      var k='gonzaleslaw2026indexnow', u='https://links.gonzaleslawoffices.com/';
+      // Ping Bing IndexNow (also relays to Yandex, Seznam, Naver)
+      if(!sessionStorage.getItem('inPinged')){
+        fetch('https://api.indexnow.org/IndexNow?url='+encodeURIComponent(u)+'&key='+k,{mode:'no-cors'}).catch(function(){});
+        sessionStorage.setItem('inPinged','1');
+      }
+    })();
+  </script>
 
   <!-- ═══ Photo Background ═══ -->
   <div id="photo-bg"></div>

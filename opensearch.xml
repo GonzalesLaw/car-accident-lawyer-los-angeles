@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Gonzales Law</ShortName>
+  <Description>Search Gonzales Law Offices — Car Accident Lawyer Fontana CA</Description>
+  <Tags>car accident lawyer personal injury attorney Fontana San Bernardino California</Tags>
+  <Contact>contact@gonzaleslawoffices.com</Contact>
+  <Url type="text/html" method="get" template="https://www.gonzaleslawoffices.com/?s={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://links.gonzaleslawoffices.com/opensearch.xml"/>
+  <Image height="16" width="16" type="image/x-icon">https://links.gonzaleslawoffices.com/logo.jpg</Image>
+  <Image height="64" width="64" type="image/jpeg">https://links.gonzaleslawoffices.com/logo.jpg</Image>
+  <Language>en-us</Language>
+  <Language>es</Language>
+  <OutputEncoding>UTF-8</OutputEncoding>
+  <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

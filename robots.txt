@@ -1,22 +1,149 @@
+# ═══════════════════════════════════════════
+# Gonzales Law Offices — robots.txt
+# Car Accident Lawyer | Fontana, CA
+# ═══════════════════════════════════════════
+
+# ── Allow all major search engines ──
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
+# Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
-User-agent: Bingbot
+User-agent: Googlebot-Image
 Allow: /
 
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: APIs-Google
+Allow: /
+
+# Bing / Microsoft
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: MSNBot
+Allow: /
+
+User-agent: MSNBot-Media
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+User-agent: adidxbot
+Allow: /
+
+# Yahoo (uses Bing index)
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: DuckDuckGo-Favicons-Bot
+Allow: /
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: YandexVideo
+Allow: /
+
+User-agent: YandexMetrika
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+# Seznam (Czechia)
+User-agent: SeznamBot
+Allow: /
+
+# Naver (Korea)
+User-agent: Yeti
+Allow: /
+
+# Sogou (China)
+User-agent: Sogou web spider
+Allow: /
+
+# 360 Spider (China)
+User-agent: 360Spider
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Facebook / Meta
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+# Twitter / X
+User-agent: Twitterbot
+Allow: /
+
+# LinkedIn
+User-agent: LinkedInBot
+Allow: /
+
+# Pinterest
+User-agent: Pinterest
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+# Slack
+User-agent: Slackbot
+Allow: /
+
+# WhatsApp
+User-agent: WhatsApp
+Allow: /
+
+# Telegram
+User-agent: TelegramBot
+Allow: /
+
+# ── AI Search & LLM Crawlers ──
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: Google-Extended
-Allow: /
-
-User-agent: PerplexityBot
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: anthropic-ai
@@ -25,10 +152,39 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: cohere-ai
 Allow: /
 
 User-agent: YouBot
 Allow: /
 
+User-agent: Diffbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: DataForSeoBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+# ── Sitemaps ──
 Sitemap: https://links.gonzaleslawoffices.com/sitemap.xml
+Sitemap: https://www.gonzaleslawoffices.com/sitemap.xml

@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <url>
     <loc>https://links.gonzaleslawoffices.com/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://links.gonzaleslawoffices.com/logo.jpg</image:loc>
+      <image:title>Gonzales Law Offices — Car Accident Lawyer Fontana CA</image:title>
+      <image:caption>Mark Gonzales, Esq. — Personal Injury Attorney serving Fontana, San Bernardino, Ontario, and Rancho Cucamonga CA. $100M+ recovered.</image:caption>
+      <image:geo_location>Fontana, California, United States</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://links.gonzaleslawoffices.com/bg.jpg</image:loc>
+      <image:title>Attorney Mark Gonzales in Court — Gonzales Law Offices</image:title>
+      <image:caption>Mark Gonzales, Esq. presenting in court. Top-rated car accident and personal injury lawyer in Southern California.</image:caption>
+      <image:geo_location>Fontana, California, United States</image:geo_location>
+    </image:image>
+    <xhtml:link rel="alternate" hreflang="en" href="https://links.gonzaleslawoffices.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gonzaleslawoffices.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://links.gonzaleslawoffices.com/"/>
   </url>
 
 </urlset>
